@@ -1,9 +1,18 @@
 pipeline {
+
+    environment {
+        registry = "onlysumitg/devops_project1"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+        buildNumber = 'latest'
+    
+    }
+
     // tell jenkins that we are going to use dockerfile
     agent any
 
     stages {
-        def app 
+       
 
         stage('Get code from github') {
             steps
@@ -13,11 +22,20 @@ pipeline {
         }
  
         stage('Build docker image') {
-            steps
-            {
-               app = docker.build("onlysumitg/devops-project1")    
-            }
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
         } 
+
+        stage('Deploy our image') {
+                    steps{
+                        script {
+                            docker.withRegistry( '', registryCredential ) {
+                                dockerImage.push()
+                            }
+                        }
+                    }
+            }
     }
 
 
