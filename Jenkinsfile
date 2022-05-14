@@ -1,6 +1,6 @@
 pipeline {
     // tell jenkins that we are going to use dockerfile
-    agent { dockerfile true }
+    agent any
 
     stages {
         stage('Get code from github') {
@@ -11,4 +11,6 @@ pipeline {
         }
  
     }
+
+    
 }
