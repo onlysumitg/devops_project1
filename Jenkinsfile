@@ -1,7 +1,7 @@
 pipeline {
 
     environment {
-        registry = "onlysumitg/devops_project1"
+        registry = "registry.hub.docker.com/onlysumitg/devops_project1"
         registryCredential = 'dockerhub'
         dockerImage = ''
         buildNumber = 'latest'
