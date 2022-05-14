@@ -21,7 +21,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/onlysumitg/devops_project1.git'
                
                 script {
-                        gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()
+                        gitTag=sh(returnStdout: true, script: "git tag --sort=-creatordate  | head -1").trim()
                     }
                 sh "echo $gitTag  done "
             }
