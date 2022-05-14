@@ -8,9 +8,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-echo "Running migrations"
-python manage.py makemigrations
-python manage.py migrate
+ 
  
  
 
