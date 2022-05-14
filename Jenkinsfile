@@ -5,6 +5,8 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
         buildNumber = 'latest'
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
+
     
     }
 
@@ -28,16 +30,18 @@ pipeline {
                 }
                }
         } 
-
-        stage('Deploy our image') {
+        stage('Deploy our image 1') {
                     steps{
-                        script {
-                            docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-                                dockerImage.push()
-                            }
+                        steps {
+                            sh "echo $DOCKER_HUB_CREDENTIALS_USR"
+                            sh "echo $DOCKER_HUB_CREDENTIALS_PSW"
+                            sh podman login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW registry.hub.docker.com 
                         }
                     }
             }
+
+
+     
     }
 
 
