@@ -30,13 +30,13 @@ pipeline {
                 }
                }
         } 
-        stage('Deploy our image 1') {
+        stage('Publish Image') {
                     steps{
-                     
-                            sh "echo $DOCKER_HUB_CREDENTIALS_USR"
-                            sh "echo $DOCKER_HUB_CREDENTIALS_PSW"
-                            sh "podman login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW registry.hub.docker.com" 
                         
+                          
+                            sh "podman login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW registry.hub.docker.com" 
+                            sh "echo $dockerImage" 
+                            sh "podman push $dockerImage"
                     }
             }
 
