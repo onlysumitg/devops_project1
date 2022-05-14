@@ -3,6 +3,8 @@ pipeline {
     agent any
 
     stages {
+        def app 
+
         stage('Get code from github') {
             steps
             {
@@ -10,7 +12,13 @@ pipeline {
             }
         }
  
+        stage('Build docker image') {
+            steps
+            {
+               app = docker.build("onlysumitg/devops-project1")    
+            }
+        } 
     }
 
-    
+
 }
