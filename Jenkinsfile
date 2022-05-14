@@ -9,9 +9,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/onlysumitg/devops_project1.git'
             }
         }
-        
-        stage('Build Image') {}
-        stage('Publish Image') {}
-        stage('Deploy app') {}
+ 
     }
 }
