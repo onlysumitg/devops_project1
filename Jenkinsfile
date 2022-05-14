@@ -39,7 +39,7 @@ pipeline {
                          
                             sh "podman login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW registry.hub.docker.com" 
                             sh "echo $dockerImage" 
-                            sh "podman push $registry:$BUILD_NUMBER"
+                            sh "podman push $registry:$gitTag"
                     }
             }
 
