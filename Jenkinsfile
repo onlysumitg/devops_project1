@@ -6,6 +6,7 @@ pipeline {
         dockerImage = ''
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
         CONTAINER_NAME = 'achistar'
+        gitTag = ''
     }
 
     // tell jenkins that we are going to use dockerfile
@@ -18,6 +19,11 @@ pipeline {
             steps
             {
                 git branch: 'main', url: 'https://github.com/onlysumitg/devops_project1.git'
+               
+                script {
+                        gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()
+                    }
+                sh "echo Building $TAG_NAME  and $gitTag  done "
             }
         }
  
