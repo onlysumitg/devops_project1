@@ -4,10 +4,8 @@ pipeline {
         registry = "registry.hub.docker.com/onlysumitg/devops_project1"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        buildNumber = 'latest'
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
-
-    
+        CONTAINER_NAME = 'achistar'
     }
 
     // tell jenkins that we are going to use dockerfile
@@ -32,14 +30,29 @@ pipeline {
         } 
         stage('Publish Image') {
                     steps{
-                        
-                          
+                         
                             sh "podman login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW registry.hub.docker.com" 
                             sh "echo $dockerImage" 
                             sh "podman push $registry:$BUILD_NUMBER"
                     }
             }
 
+        stage('Stop existing container') {
+                    steps{
+                            
+                            sh "podman stop $CONTAINER_NAME || true "
+                            sh "podman rm $CONTAINER_NAME || true " 
+                      
+                    }
+            }
+
+        stage('Run container') {
+                    steps{
+
+                            sh "podman run -d -p 8000:8000 --name=$CONTAINER_NAME --security-opt label=disable $registry:$BUILD_NUMBER" 
+                      
+                    }
+            }
 
      
     }
