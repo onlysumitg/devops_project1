@@ -49,7 +49,7 @@ pipeline {
         stage('Run container') {
                     steps{
 
-                            sh "podman run -d -p 8000:8000 --name=$CONTAINER_NAME --security-opt label=disable $registry:$BUILD_NUMBER" 
+                            sh "podman run -d -p 8000:8000 --name=$CONTAINER_NAME $registry:$BUILD_NUMBER" 
                       
                     }
             }
