@@ -23,7 +23,7 @@ pipeline {
                 script {
                         gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()
                     }
-                sh "echo Building $TAG_NAME  and $gitTag  done "
+                sh "echo $gitTag  done "
             }
         }
  
