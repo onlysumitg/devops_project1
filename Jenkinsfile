@@ -6,7 +6,7 @@ pipeline {
         dockerImage = ''
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
         CONTAINER_NAME = 'achistar'
-        gitTag = ''
+        gitTag = 'latest'
     }
 
     // tell jenkins that we are going to use dockerfile
@@ -23,14 +23,14 @@ pipeline {
                 script {
                         gitTag=sh(returnStdout: true, script: "git tag --sort=-creatordate  | head -1").trim()
                     }
-                sh "echo $gitTag  done "
+                 
             }
         }
  
         stage('Build docker image') {
                steps{
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":$gitTag"
                 }
                }
         } 
@@ -55,7 +55,7 @@ pipeline {
         stage('Run container') {
                     steps{
 
-                            sh "JENKINS_NODE_COOKIE=dontKillMe podman run -d -p 8000:8000 --name=$CONTAINER_NAME $registry:$BUILD_NUMBER" 
+                            sh "JENKINS_NODE_COOKIE=dontKillMe podman run -d -p 8000:8000 --name=$CONTAINER_NAME $registry:$gitTag" 
                       
                     }
             }
