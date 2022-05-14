@@ -37,7 +37,10 @@ RUN pip install --upgrade pip \
  
 # application port
 EXPOSE 8000
-
+# Change this to UID that matches your username on the host
+# Note: RUN commands before this line will execute as root in the container
+# RUN commands after will execute under this non-privileged UID
+USER 1000:1000
 # start application
 CMD ["./start.sh"]
 
